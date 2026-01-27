@@ -62,6 +62,55 @@ internal class Program
 
                     break;
                 case 4:
+                    Console.Clear();
+
+                    string name = Utils.Name();
+
+                    Persona? persona = Utils.Search(_persona, name);
+
+                    if (persona != null)
+                    {
+                        Console.WriteLine($"persona encontrada {persona.Nombre}");
+                        int newAge = Utils.Age();
+                        persona.Edad = newAge;
+
+                        Console.WriteLine($"Edad modificada a {persona.Edad}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Persona no encontrada");
+                    }
+                        break;
+                case 5:
+                    Console.Clear();
+
+                    if (!Utils.HayPersona(_persona))
+                    {
+                        Console.WriteLine("No hay personas registradas");
+                        break;
+                    }
+
+                    if (!Utils.HayMayores(_persona))
+                    {
+                        Console.WriteLine("No hay personas mayores de edad");
+                        break;
+                    }
+
+                    var mayores = Utils.GetMayores(_persona);
+
+                    foreach (var p in mayores)
+                    {
+                        Console.WriteLine($"Nombre: {p.Nombre} - Edad: {p.Edad}");
+                    }
+                    break;
+                case 6:
+                    var personas = Utils.GetNombresMayores(_persona);
+                    foreach ((string nombre, int edad) in personas)
+                    {
+                        Console.WriteLine($"Nombre: {nombre.ToUpper()}, Edad: {edad}");
+                    }
+                    break;
+                case 7:
                     _continue = false;
                     break;
                 default:
