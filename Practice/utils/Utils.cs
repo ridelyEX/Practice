@@ -1,11 +1,11 @@
 ﻿using Practice.persona;
 using System;
 using System.Linq;
-using System.Net.NetworkInformation;
+//using System.Net.NetworkInformation;
 //using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+//sing System.Reflection.Metadata.Ecma335;
+//using System.Text;
+//using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Practice.utils
 {
@@ -220,6 +220,94 @@ namespace Practice.utils
                 .Where(p => p.Edad >= 18)
                 .Select(p => (p.Nombre, p.Edad))
                 .ToList();
+        }
+
+        /// <summary>
+        /// Calculates the average age of all personas in the specified list.
+        /// </summary>
+        /// <param name="list">The list of personas whose ages will be averaged. Cannot be null.</param>
+        /// <returns>The average age of the personas in the list. Returns 0 if the list is null or contains no elements.</returns>
+        public static double AverageAge(List<Persona> list)
+        {
+            if (list == null || !list.Any())
+                return 0;
+
+            return list.Any()
+                ? list.Average(p => p.Edad) : 0;
+        }
+
+        /// <summary>
+        /// Returns the number of elements in the specified list of Persona objects.
+        /// </summary>
+        /// <param name="list">The list of Persona objects to count. Cannot be null.</param>
+        /// <returns>The number of Persona objects contained in the list.</returns>
+        public static int CountPeople(List<Persona> list)
+        {
+            return list.Count();
+        }
+
+        /// <summary>
+        /// Counts the number of people in the specified list who are considered adults (age 18 or older).
+        /// </summary>
+        /// <param name="list">The list of Persona objects to evaluate. Cannot be null.</param>
+        /// <returns>The number of people in the list whose age is 18 or greater.</returns>
+        public static int CountElderPeople(List<Persona> list)
+        {
+            return list.Count(p => p.Edad >= 18);
+        }
+
+        /// <summary>
+        /// Returns the maximum age value from the specified list of Persona objects.
+        /// </summary>
+        /// <param name="list">The list of Persona objects from which to determine the maximum age. Cannot be null.</param>
+        /// <returns>The highest value of the Edad property among the Persona objects in the list. Returns 0 if the list is
+        /// empty.</returns>
+        public static int MaxAge(List<Persona> list)
+        {
+            return list.Any()
+                ? list.Max(p => p.Edad) : 0;
+        }
+
+        public static List<Persona> OrderByAge(List<Persona> list)
+        {
+            return list.OrderBy(p => p.Edad).ToList();
+        }
+
+        public static List<Persona> OrderByAgeReverse(List<Persona> list)
+        {
+            return list.OrderByDescending(p => p.Edad).ToList();
+        }
+
+        public static List<Persona> OrderByAgeAndName(List<Persona> list)
+        {
+            if (list.Count == 0 || !list.Any())
+                return new List<Persona>();
+            return list.OrderBy(p => p.Edad).ThenBy(p => p.Nombre).ToList();
+        }
+
+        public static List<string> GetNames(List<Persona> list)
+        {
+            if (list == null || !list.Any())
+                return new List<string>();    
+            return list.Select(p => p.Nombre).ToList();
+        }
+
+        public static List<string> GetElderNames(List<Persona> list)
+        {
+            if (list == null || !list.Any())
+                return new List<string>();
+            
+            return list
+                .Where(p => p.Edad >= 18)
+                .Select(p => p.Nombre)
+                .ToList();
+        }
+
+        public static int DoubleTotalAge(List<Persona> list)
+        {
+            if (list == null || !list.Any())
+                return 0;
+            return list.Sum(p => p.Edad) * 2;
         }
     }
 }
