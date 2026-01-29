@@ -111,6 +111,21 @@ internal class Program
                     }
                     break;
                 case 7:
+                    var listilla = new List<Persona>
+                    {
+                        new Persona {Nombre = "luis", Edad = 24 },
+                        new Persona {Nombre = "toño", Edad = 31 },
+                        new Persona {Nombre = "toñito", Edad = 15 },
+                        new Persona {Nombre = "luisito", Edad = 17 },
+                        new Persona {Nombre = "joselito", Edad = 18 },
+                        new Persona {Nombre = "jose", Edad = 45 },
+                    };
+
+                    var ages = Utils.RangeAge();
+                    Utils.GroupBy18To40(listilla, ages.Item1, ages.Item2);
+
+                    break;
+                case 10:
                     _continue = false;
                     break;
                 default:

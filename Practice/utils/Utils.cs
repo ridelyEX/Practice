@@ -268,16 +268,34 @@ namespace Practice.utils
                 ? list.Max(p => p.Edad) : 0;
         }
 
+        /// <summary>
+        /// Returns a new list of Persona objects sorted in ascending order by age.
+        /// </summary>
+        /// <param name="list">The list of Persona objects to sort. Cannot be null.</param>
+        /// <returns>A new List<Persona> containing the elements of the input list ordered by the Edad property in ascending
+        /// order. If the input list is empty, returns an empty list.</returns>
         public static List<Persona> OrderByAge(List<Persona> list)
         {
             return list.OrderBy(p => p.Edad).ToList();
         }
 
+        /// <summary>
+        /// Returns a new list of Persona objects sorted in descending order by age.
+        /// </summary>
+        /// <param name="list">The list of Persona objects to sort. Cannot be null.</param>
+        /// <returns>A new List<Persona> containing the elements of the input list, ordered from oldest to youngest. If the input
+        /// list is empty, returns an empty list.</returns>
         public static List<Persona> OrderByAgeReverse(List<Persona> list)
         {
             return list.OrderByDescending(p => p.Edad).ToList();
         }
 
+        /// <summary>
+        /// Returns a new list of Persona objects sorted first by age in ascending order, then by name in ascending
+        /// order.
+        /// </summary>
+        /// <param name="list">The list of Persona objects to sort. Cannot be null.</param>
+        /// <returns>A new list containing the sorted Persona objects. If the input list is empty, returns an empty list.</returns>
         public static List<Persona> OrderByAgeAndName(List<Persona> list)
         {
             if (list.Count == 0 || !list.Any())
@@ -285,6 +303,12 @@ namespace Practice.utils
             return list.OrderBy(p => p.Edad).ThenBy(p => p.Nombre).ToList();
         }
 
+        /// <summary>
+        /// Returns a list of names extracted from the specified list of Persona objects.
+        /// </summary>
+        /// <param name="list">The list of Persona objects from which to retrieve names. Can be null or empty.</param>
+        /// <returns>A list of strings containing the names of each Persona in the input list. Returns an empty list if the input
+        /// is null or contains no elements.</returns>
         public static List<string> GetNames(List<Persona> list)
         {
             if (list == null || !list.Any())
@@ -292,6 +316,12 @@ namespace Practice.utils
             return list.Select(p => p.Nombre).ToList();
         }
 
+        /// <summary>
+        /// Returns a list of names for all personas in the specified list who are 18 years of age or older.
+        /// </summary>
+        /// <param name="list">The list of personas to evaluate. Cannot be null; if empty, an empty list is returned.</param>
+        /// <returns>A list of strings containing the names of personas aged 18 or older. Returns an empty list if no such
+        /// personas are found or if the input list is empty.</returns>
         public static List<string> GetElderNames(List<Persona> list)
         {
             if (list == null || !list.Any())
@@ -303,11 +333,62 @@ namespace Practice.utils
                 .ToList();
         }
 
+        /// <summary>
+        /// Calculates twice the sum of the ages of all personas in the specified list.
+        /// </summary>
+        /// <param name="list">The list of personas whose ages will be summed and doubled. Can be null or empty.</param>
+        /// <returns>The doubled total of all ages in the list. Returns 0 if the list is null or contains no elements.</returns>
         public static int DoubleTotalAge(List<Persona> list)
         {
             if (list == null || !list.Any())
                 return 0;
             return list.Sum(p => p.Edad) * 2;
+        }
+
+        /// <summary>
+        /// Prompts the user to enter a lower and upper age bound and returns the values as a tuple in ascending order.
+        /// </summary>
+        /// <remarks>If the user enters the bounds in reverse order, the method automatically swaps them
+        /// to ensure the returned tuple is in ascending order.</remarks>
+        /// <returns>A tuple containing two integers representing the lower and upper bounds of the age range, with the first
+        /// value less than or equal to the second.</returns>
+        public static (int, int) RangeAge()
+        {
+            int age1, age2;
+
+            Console.WriteLine("Ingrese la edad del rango menor a buscar");
+            age1 = Age();
+
+            Console.WriteLine("Ingrese la edad del rango mayor a buscar");
+            age2 = Age();
+
+            if (age1 > age2)
+                (age1, age2) = (age2, age1);
+
+            return (age1, age2);
+        }
+
+        /// <summary>
+        /// Groups the provided list of personas into two categories based on whether their age falls within the
+        /// specified range, and writes the average age and count for each group to the console.
+        /// </summary>
+        /// <remarks>This method outputs the results directly to the console. It does not return any
+        /// values or modify the input list.</remarks>
+        /// <param name="list">The list of personas to group and analyze. Cannot be null.</param>
+        /// <param name="age1">The lower bound of the age range, inclusive. Must be less than or equal to <paramref name="age2"/>.</param>
+        /// <param name="age2">The upper bound of the age range, inclusive. Must be greater than or equal to <paramref name="age1"/>.</param>
+        public static void GroupBy18To40(List<Persona> list, int age1, int age2)
+        {
+            var grupos = list.GroupBy(p => (p.Edad >= age1 && p.Edad <= age2));  
+
+            foreach (var grupo in grupos)
+            {
+                if (grupo.Any())
+                {
+                    Console.WriteLine($"Promedio del grupo: {grupo.Average(p => p.Edad)}");
+                    Console.WriteLine($"Cantidad: {grupo.Count()}");
+                }
+            }
         }
     }
 }
