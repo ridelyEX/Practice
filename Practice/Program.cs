@@ -11,7 +11,7 @@ internal class Program
         int opc = 0;
         bool _continue = true;
 
-        Persona p = new Persona("julian", 0);
+        //Persona p = new Persona("julian", 0);
 
         do
         {
@@ -23,8 +23,10 @@ internal class Program
             switch (opc)
             {
                 case 1:
-                    p.ModifyAge(15);
-                    Console.WriteLine($"Grupo {p.GetGrupoEdad}");
+                    Persona? p1 = new Persona(Utils.Name(), Utils.Age());
+
+                    //p.ModifyAge(15);
+                    Console.WriteLine($"Grupo {p1.GetGrupoEdad}");
                     break;
                 case 10:
                     _continue = false;
