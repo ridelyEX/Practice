@@ -6,9 +6,15 @@ namespace Practice.persona
 {
     internal class Persona
     {
+        public string Nombre { get; }
+        public int Edad { get; private set; }
 
-        public string Nombre { get; set; }
-        public int Edad { get; set; }
+        public enum GrupoEdad
+        {
+            Menor,
+            Adulto,
+            Mayor
+        }
 
         public Persona()
         {
@@ -17,7 +23,25 @@ namespace Practice.persona
         public Persona(string nombre, int edad)
         {
             Nombre = nombre;
-            Edad = edad;
+            ModifyAge(edad);
+        }
+
+        public void ModifyAge(int newAge)
+        {
+            if (newAge < 0)
+                throw new ArgumentException("Edad inválida");
+
+            Edad = newAge;
+        }
+
+        public GrupoEdad GetGrupoEdad
+        {
+            get 
+            {
+                if (Edad < 18 && Edad > 0) return GrupoEdad.Menor;
+                if (Edad >= 18 && Edad < 60) return GrupoEdad.Adulto;
+                return GrupoEdad.Mayor;
+            }
         }
     }
 }

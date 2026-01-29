@@ -1,4 +1,5 @@
 ﻿using Practice.persona;
+using Practice.services;
 using Practice.utils;
 using System;
 
@@ -10,6 +11,8 @@ internal class Program
         int opc = 0;
         bool _continue = true;
 
+        Persona p = new Persona("julian", 0);
+
         do
         {
             Utils.Menu();
@@ -20,110 +23,8 @@ internal class Program
             switch (opc)
             {
                 case 1:
-                    Console.Clear();
-                    string _name = Utils.Name();
-                    int _age = Utils.Age();
-                    Persona? p1 = null;
-
-                    if (_name != null && _age != 0)
-                    {
-                        p1 = new Persona(_name, _age); 
-                        _persona.Add(p1);
-                        Console.WriteLine("Persona registrada");
-                    }
-                    else
-                    {
-                        Console.Write("No se puede registrar a la persona, vuelva a intentarlo");
-                    }
-
-                        break;
-                case 2:
-                    Console.Clear();
-                    foreach (Persona p in _persona)
-                    {
-                        Console.WriteLine($"Nombre {p.Nombre}, Edad: {p.Edad}");
-                    }
-                    break;
-                case 3:
-                    int index = Utils.SearchPersona(_persona, Utils.Name());
-
-                    if (index != -1)
-                    {
-                        Console.WriteLine($"Persona encontrada: {_persona[index].Nombre}");
-                        int newAge = Utils.Age();
-                        Utils.ModifyAge(_persona, index, newAge);
-
-                        Console.WriteLine($"Edad modificada: {_persona[index].Edad}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Persona no encontrada");
-                    }
-
-                    break;
-                case 4:
-                    Console.Clear();
-
-                    string name = Utils.Name();
-
-                    Persona? persona = Utils.Search(_persona, name);
-
-                    if (persona != null)
-                    {
-                        Console.WriteLine($"persona encontrada {persona.Nombre}");
-                        int newAge = Utils.Age();
-                        persona.Edad = newAge;
-
-                        Console.WriteLine($"Edad modificada a {persona.Edad}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Persona no encontrada");
-                    }
-                        break;
-                case 5:
-                    Console.Clear();
-
-                    if (!Utils.HayPersona(_persona))
-                    {
-                        Console.WriteLine("No hay personas registradas");
-                        break;
-                    }
-
-                    if (!Utils.HayMayores(_persona))
-                    {
-                        Console.WriteLine("No hay personas mayores de edad");
-                        break;
-                    }
-
-                    var mayores = Utils.GetMayores(_persona);
-
-                    foreach (var p in mayores)
-                    {
-                        Console.WriteLine($"Nombre: {p.Nombre} - Edad: {p.Edad}");
-                    }
-                    break;
-                case 6:
-                    var personas = Utils.GetNombresMayores(_persona);
-                    foreach ((string nombre, int edad) in personas)
-                    {
-                        Console.WriteLine($"Nombre: {nombre.ToUpper()}, Edad: {edad}");
-                    }
-                    break;
-                case 7:
-                    var listilla = new List<Persona>
-                    {
-                        new Persona {Nombre = "luis", Edad = 24 },
-                        new Persona {Nombre = "toño", Edad = 31 },
-                        new Persona {Nombre = "toñito", Edad = 15 },
-                        new Persona {Nombre = "luisito", Edad = 17 },
-                        new Persona {Nombre = "joselito", Edad = 18 },
-                        new Persona {Nombre = "jose", Edad = 45 },
-                    };
-
-                    var ages = Utils.RangeAge();
-                    Utils.GroupBy18To40(listilla, ages.Item1, ages.Item2);
-
+                    p.ModifyAge(15);
+                    Console.WriteLine($"Grupo {p.GetGrupoEdad}");
                     break;
                 case 10:
                     _continue = false;
